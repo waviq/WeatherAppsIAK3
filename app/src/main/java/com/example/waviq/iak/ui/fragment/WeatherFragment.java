@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +19,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.waviq.iak.R;
+import com.example.waviq.iak.adapters.WeatherAdapter;
 import com.example.waviq.iak.config.Constant;
 import com.example.waviq.iak.models.WeatherModel;
+import com.example.waviq.iak.models.WeatherModelList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +65,11 @@ public class WeatherFragment extends Fragment {
     private TextView minTemp;
     private TextView status;
     private TextView city;*/
+
+    private ArrayList<WeatherModelList> mWeatherModelList = new ArrayList<>();
+
+    WeatherAdapter adapterWeather;
+
 
 
 
@@ -101,6 +112,14 @@ public class WeatherFragment extends Fragment {
 
         ButterKnife.bind(this, v);
 
+        RecyclerView recyclerView = (RecyclerView)v.findViewById(R.id.recycleList);
+        adapterWeather = new WeatherAdapter(mWeatherModelList);
+        recyclerView.setAdapter(adapterWeather);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constant.fullUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -122,6 +141,27 @@ public class WeatherFragment extends Fragment {
 
                     city.setText(weatherModel.getCity());
                     time.setText(weatherModel.getTime());
+
+                    for(int x=0;x<10;x++){
+
+                        JSONObject object = list.getJSONObject(x);
+                        JSONObject main = object.getJSONObject("main");
+                        Double maxTempList = main.getDouble("temp_max");
+                        Double minTempList = main.getDouble("temp_min");
+
+
+                        JSONArray weatherArrayList = object.getJSONArray("weather");
+                        JSONObject weatherList = weatherArrayList.getJSONObject(0);
+                        String weatherStatusList = weatherList.getString("main");
+
+                        String dateMonthList = object.getString("dt_txt");
+
+                        WeatherModelList weatherModelList = new WeatherModelList(dateMonthList,weatherStatusList,maxTempList,minTempList);
+                        mWeatherModelList.add(weatherModelList);
+                        adapterWeather.notifyDataSetChanged();
+
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
