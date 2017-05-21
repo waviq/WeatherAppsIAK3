@@ -4,14 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.waviq.iak.R;
+import com.example.waviq.iak.config.Constant;
 import com.example.waviq.iak.models.WeatherModel;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,11 +99,23 @@ public class WeatherFragment extends Fragment {
 
         ButterKnife.bind(this, v);
 
-        time.setText("200");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constant.fullUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
 
 
 
-        return  v;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Error ",error.getLocalizedMessage());
+            }
+        });
+
+        Volley.newRequestQueue(getContext()).add(jsonObjectRequest);
+        // Inflate the layout for this fragment
+        return v;
 
 
 

@@ -11,4 +11,6 @@ public class Constant {
     final public static String Unit = "&units=metric";
     final public static String APIKEY = "&APPID=9ed2257682b1d9a2eb66c15047e1bfdd";
 
+    final public static String fullUrl = BASE_URL + LocationLat + Unit + APIKEY;
+
 }
