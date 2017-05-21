@@ -31,6 +31,14 @@ public class WeatherHolderList extends RecyclerView.ViewHolder {
     }
 
     public void updateUI(WeatherModelList weatherList){
+
+        if (weatherList.getStatus().equals("Clear")){
+            iconMini.setImageResource(R.drawable.sun_mini);
+        }else if(weatherList.getStatus().equals("Rain")){
+            iconMini.setImageResource(R.drawable.rain_mini);
+        }else if (weatherList.getStatus().equals("Clouds")){
+            iconMini.setImageResource(R.drawable.cold_mini);
+        }
         timeList.setText(weatherList.getTime());
         statusList.setText(weatherList.getStatus());
         tempMaxList.setText( String.valueOf(weatherList.getTempMax()));
