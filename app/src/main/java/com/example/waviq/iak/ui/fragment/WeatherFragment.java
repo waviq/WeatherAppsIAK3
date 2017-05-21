@@ -7,11 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.waviq.iak.R;
+import com.example.waviq.iak.models.WeatherModel;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class WeatherFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -20,6 +27,19 @@ public class WeatherFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private WeatherModel weatherModel = new WeatherModel();
+
+
+    @BindView(R.id.tvTime)TextView time;
+    @BindView(R.id.imgLogoUtama)ImageView logoUtana;
+    @BindView(R.id.tvDayDate)ImageView dayDate;
+    @BindView(R.id.imgCuaca)ImageView cuacaLogo;
+    @BindView(R.id.tvMaxTemp)TextView maxTemp;
+    @BindView(R.id.tvMinTemp)TextView minTemp;
+    @BindView(R.id.tvStatus)TextView status;
+    @BindView(R.id.tvCity)TextView city;
+
 
 
     public WeatherFragment() {
@@ -57,6 +77,17 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_weather, container, false);
+
+        ButterKnife.bind(v);
+
+
+
+
+        return  v;
+
+
+
     }
 }
