@@ -33,12 +33,21 @@ public class WeatherFragment extends Fragment {
 
     @BindView(R.id.tvTime)TextView time;
     @BindView(R.id.imgLogoUtama)ImageView logoUtana;
-    @BindView(R.id.tvDayDate)ImageView dayDate;
+    @BindView(R.id.tvDayDate)TextView dayDate;
     @BindView(R.id.imgCuaca)ImageView cuacaLogo;
     @BindView(R.id.tvMaxTemp)TextView maxTemp;
     @BindView(R.id.tvMinTemp)TextView minTemp;
     @BindView(R.id.tvStatus)TextView status;
     @BindView(R.id.tvCity)TextView city;
+
+    /*private TextView time;
+    private ImageView logoUtana;
+    private TextView dayDate;
+    private ImageView cuacaLogo;
+    private TextView maxTemp;
+    private TextView minTemp;
+    private TextView status;
+    private TextView city;*/
 
 
 
@@ -77,11 +86,11 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View v = inflater.inflate(R.layout.fragment_weather, container, false);
 
-        ButterKnife.bind(v);
+        ButterKnife.bind(this, v);
 
+        time.setText("200");
 
 
 
