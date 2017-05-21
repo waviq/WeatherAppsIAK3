@@ -20,6 +20,8 @@ import com.example.waviq.iak.R;
 import com.example.waviq.iak.config.Constant;
 import com.example.waviq.iak.models.WeatherModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
@@ -103,7 +105,27 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
 
+                try {
+                    JSONObject cityObject = response.getJSONObject("city");
+                    String nameCity = cityObject.getString("name");
+                    JSONArray list = response.getJSONArray("list");
+                    JSONObject jsonIndex = list.getJSONObject(0);
 
+                    String times = jsonIndex.getString("dt_txt");
+
+
+
+                    Log.d("List...", list.toString());
+
+                    weatherModel.setCity(nameCity);
+                    weatherModel.setTime(times);
+
+                    city.setText(weatherModel.getCity());
+                    time.setText(weatherModel.getTime());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }, new Response.ErrorListener() {

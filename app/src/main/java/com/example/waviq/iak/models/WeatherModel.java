@@ -1,5 +1,8 @@
 package com.example.waviq.iak.models;
 
+import android.icu.text.SimpleDateFormat;
+
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -21,6 +24,16 @@ public class WeatherModel {
     }
 
     public void setTime(String time) {
+
+        SimpleDateFormat formatDefault = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formatTimeCustom = new SimpleDateFormat("hh.mm");
+
+        try {
+            Date timesFormat = formatDefault.parse(time);
+            time = formatTimeCustom.format(timesFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.time = time;
     }
 
